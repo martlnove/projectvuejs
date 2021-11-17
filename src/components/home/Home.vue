@@ -66,9 +66,11 @@ export default {
 
   methods: {
     remove(foto) {
-      this.$http.delete(`http://localhost:3000/v1/fotos/${foto._id}`).then(
-        () => {
-          // assim que apagar, exibe a mensagem para o usuário
+      this.$http
+      .delete(`http://localhost:3000/v1/fotos/${foto._id}`)
+      .then(() => {
+          let indice = this.fotos.indexOf(fotos);
+          this.fotos.splice(indice, 1);
           this.mensagem = "Foto removida com sucesso";
         },
         (err) => {
