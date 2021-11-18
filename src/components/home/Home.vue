@@ -18,6 +18,9 @@
             :titulo="foto.titulo"
             v-meu-transform:scale.animate="1.2"
           />
+          <router-link :to="{name: 'cadastro', params: {id: foto._id}}">
+            <meu-botao tipo="button" rotulo= "ALTERAR" />
+          </router-link>
           <meu-botao
             rotulo="Remover"
             tipo="button"
@@ -35,6 +38,7 @@
 import Painel from "../shared/painel/Painel.vue";
 import ImagemResponsiva from "../shared/imagem-responsiva/ImagemResponsiva.vue";
 import Botao from "../shared/botao/Botao.vue";
+import FotoService from "../../domain/foto/FotoService";
 
 export default {
   components: {
@@ -89,11 +93,9 @@ export default {
 
   created() {
 
-    this.resource = this.$resource('v1/fotos{/id}');
-
-    this.resource
-      .query()
-      .then(res => res.json())
+    this.service =  new FotoService(this.$resource);
+    this.service
+    .lista()
       .then(fotos => this.fotos = fotos, err => console.log(err));
   }
 }
